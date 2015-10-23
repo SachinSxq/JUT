@@ -1,9 +1,11 @@
 package com.jut.core;
 
 /**
+ * JUTTriggerActionAdapter
+ *
  * Created by songxinqi-sachin on 15-10-18.
  */
-public class JUTTriggerActionAdapter implements JUTTriggerAction {
+public abstract class JUTTriggerActionAdapter implements JUTTriggerAction {
     JUTTrigger  mTrigger;
 
     public JUTTriggerActionAdapter() {
@@ -18,10 +20,5 @@ public class JUTTriggerActionAdapter implements JUTTriggerAction {
     @Override
     public JUTTrigger getTrigger() {
         return mTrigger;
-    }
-
-    @Override
-    public void run() {
-
     }
 }
