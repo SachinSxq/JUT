@@ -28,10 +28,23 @@ public class JUTGroup<T> {
     }
 
     @SafeVarargs
+    public final void add(@NotNull T... objects)  {
+        Collections.addAll(mMembers, objects);
+    }
+
+    public void add(@NotNull Collection<T> objects) {
+        mMembers.addAll(objects);
+    }
+
+    @SafeVarargs
     public final void add(@NotNull T object, @NotNull JUTFilter<T>... filters) {
-        for(JUTFilter<T> filter : filters) {
-            if(filter.filter(object)) {
-                mMembers.add(object);
+        if (null == filters) {
+            add(object);
+        } else {
+            for(JUTFilter<T> filter : filters) {
+                if(filter.filter(object)) {
+                    mMembers.add(object);
+                }
             }
         }
     }
@@ -45,14 +58,42 @@ public class JUTGroup<T> {
     @SafeVarargs
     public final int add(@NotNull T[] objects, @NotNull JUTFilter<T>... filters) {
         int num = objects.length;
-        for(T object : objects) {
-            for(JUTFilter<T> filter : filters) {
-                if(filter.filter(object)) {
-                    mMembers.add(object);
-                } else {
-                    mMembers.remove(object);
-                    --num;
-                    break;
+
+        if(null == filters) {
+            add(objects);
+        } else {
+            for (T object : objects) {
+                for (JUTFilter<T> filter : filters) {
+                    if (filter.filter(object)) {
+                        mMembers.add(object);
+                    } else {
+                        mMembers.remove(object);
+                        --num;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return num;
+    }
+
+    @SafeVarargs
+    public final int add(Collection<T> objects, JUTFilter<T>... filters) {
+        int num = objects.size();
+
+        if(null == filters) {
+            add(objects);
+        } else {
+            for (T object : objects) {
+                for (JUTFilter<T> filter : filters) {
+                    if (filter.filter(object)) {
+                        mMembers.add(object);
+                    } else {
+                        mMembers.remove(object);
+                        --num;
+                        break;
+                    }
                 }
             }
         }
@@ -63,6 +104,10 @@ public class JUTGroup<T> {
     @SafeVarargs
     public final int addFilters(@NotNull JUTFilter<T>... filters) {
         int num = mMembers.size();
+
+        if(null == filters) {
+            return num;
+        }
 
         Iterator<T> iterator = mMembers.iterator();
         while(iterator.hasNext()) {
@@ -88,6 +133,15 @@ public class JUTGroup<T> {
     public void run(@NotNull JUTHandler<T> handler) {
         for (T object : mMembers) {
             handler.run(object);
+        }
+    }
+
+    @SafeVarargs
+    public final void run(@NotNull JUTHandler<T>... handlers) {
+        for (T object : mMembers) {
+            for (JUTHandler<T> handler : handlers) {
+                handler.run(object);
+            }
         }
     }
 
