@@ -18,6 +18,11 @@ public class JUTMainTrigger {
         mTriggers = new HashMap<>();
     }
 
+    public void clear() {
+        mTriggerTypes.clear();
+        mTriggers.clear();
+    }
+
     public void registerNewTriggerType(String type, Class... classTypes) throws JUTTriggerTypeAlreadyExistException {
         if (mTriggerTypes.containsKey(type))
             throw new JUTTriggerTypeAlreadyExistException("触发器类型\"" + type + "\"已经被声明");

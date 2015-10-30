@@ -23,6 +23,11 @@ public class JUTTriggerAdapter implements JUTTrigger {
         mTriggerActions = new HashSet<>();
     }
 
+    public void clear() {
+        mParam.clear();
+        mTriggerActions.clear();
+    }
+
     @Override
     public void register(JUTMainTrigger mainTrigger) {
         mainTrigger.registerNewTrigger(this);

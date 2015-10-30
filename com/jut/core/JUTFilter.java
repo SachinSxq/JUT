@@ -14,9 +14,9 @@ public interface JUTFilter<E> {
     /**
      * 当对obj的判断为真时，应当返回true
      *
-     * @param obj 进行判断的对象
-     * @return 当满足内部判断条件时，返回true
-     * 否则返回false
+     * @param obj   进行判断的对象
+     * @return      当满足内部判断条件时，返回true
+     *              否则返回false
      */
     boolean filter(E obj);
 }
